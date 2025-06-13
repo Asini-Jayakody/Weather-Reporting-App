@@ -4,8 +4,8 @@ import SidePannel from '../components/sidePannel.jsx'
 import CurrentWeather from '../components/CurrentWeather.jsx'
 import Forecast from '../components/Forecast.jsx'
 
-export default function Home() {
-  const [location, setLocation] = useState('Colombo')
+export default function Home({location}) {
+  console.log('home location: ',location)
   const [weather, setWeather] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -38,7 +38,12 @@ export default function Home() {
   console.log(weather)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 pt-20">
+      {loading && (
+        <div className="flex justify-center items-center py-8">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        </div>
+      )}
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {weather && (
@@ -53,15 +58,12 @@ export default function Home() {
 
           <div className="w-full lg:w-2/3">
             <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-gray-800">
-                Weather in {location}
-              </h1>
-
-              {loading && (
-                <div className="flex justify-center items-center py-8">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+              {weather && 
+                <div className="flex items-center justify-between mb-4">
+                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-gray-800">Weather Details {weather.location.name}</h1>
                 </div>
-              )}
+              }
+
               
               {error && (
                 <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded">
@@ -72,7 +74,7 @@ export default function Home() {
               {weather && (
                 <div className="gap-20 flex flex-col">
                   <div>
-                    <Forecast data={weather.forecast.forecastday[0].hour} />
+                    <Forecast data={weather.forecast.forecastday[0].hour} localTime={weather.location.localtime}/>
                   </div>
                   <div>
                     <CurrentWeather current_weather={weather.current} />
