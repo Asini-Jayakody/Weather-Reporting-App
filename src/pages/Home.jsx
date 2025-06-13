@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { getCurrentWeather } from '../services/weatherAPI.js'
-import WeatherCard from '../components/WeatherCard.jsx'
 import SidePannel from '../components/sidePannel.jsx'
+import CurrentWeather from '../components/CurrentWeather.jsx'
+import Forecast from '../components/Forecast.jsx'
 
 export default function Home() {
   const [location, setLocation] = useState('Colombo')
@@ -9,12 +10,20 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+
+  const formattedDate = `${year}-${month}-${day}`
+  const num_days = 3
+
   useEffect(() => {
     const fetchWeather = async () => {
       setLoading(true)
       setError(null)
       try {
-        const data = await getCurrentWeather(location)
+        const data = await getCurrentWeather(location,num_days, formattedDate)
         setWeather(data)
       } catch (error) {
         setError(error)
@@ -26,25 +35,22 @@ export default function Home() {
     fetchWeather()
   }, [location])
 
+  console.log(weather)
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Side Panel */}
           {weather && (
             <div className="w-full lg:w-1/3">
               <div className="bg-white rounded-2xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl">
                 <SidePannel
-                  location={weather.location}
-                  time={weather.current.last_updated}
-                  temparature={weather.current.temp_c}
-                  condition={weather.current.condition}
+                  weather={weather}
                 />
               </div>
             </div>
           )}
 
-          {/* Main Content */}
           <div className="w-full lg:w-2/3">
             <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-gray-800">
@@ -64,27 +70,13 @@ export default function Home() {
               )}
 
               {weather && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                  <WeatherCard
-                    type="temperature"
-                    title="Temperature"
-                    value={`${weather.current.temp_c}°C`}
-                  />
-                  <WeatherCard
-                    type="humidity"
-                    title="Humidity"
-                    value={`${weather.current.humidity}%`}
-                  />
-                  <WeatherCard
-                    type="wind"
-                    title="Wind"
-                    value={`${weather.current.wind_kph} km/h`}
-                  />
-                  <WeatherCard
-                    type="uv"
-                    title="UV Index"
-                    value={weather.current.uv}
-                  />
+                <div className="gap-20 flex flex-col">
+                  <div>
+                    <Forecast data={weather.forecast.forecastday[0].hour} />
+                  </div>
+                  <div>
+                    <CurrentWeather current_weather={weather.current} />
+                  </div>
                 </div>
               )}
             </div>
