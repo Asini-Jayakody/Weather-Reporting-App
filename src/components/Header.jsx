@@ -12,6 +12,7 @@ export default function Header({onSearch}) {
         e.preventDefault();
         onSearch(searchLocation)
         setSearchLocation('');
+        setSuggestions([])
     }
 
   const handleSuggestionClick = (location) => {
