@@ -5,7 +5,6 @@ import CurrentWeather from '../components/CurrentWeather.jsx'
 import Forecast from '../components/Forecast.jsx'
 
 export default function Home({location}) {
-  console.log('home location: ',location)
   const [weather, setWeather] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -38,7 +37,7 @@ export default function Home({location}) {
   console.log(weather)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-blue-200 to-blue-900 pt-20">
       {loading && (
         <div className="flex justify-center items-center py-8">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
@@ -48,7 +47,7 @@ export default function Home({location}) {
         <div className="flex flex-col lg:flex-row gap-8">
           {weather && (
             <div className="w-full lg:w-1/3">
-              <div className="bg-white rounded-2xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl">
+              <div className="bg-blue-200 rounded-2xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl">
                 <SidePannel
                   weather={weather}
                 />
@@ -57,7 +56,7 @@ export default function Home({location}) {
           )}
 
           <div className="w-full lg:w-2/3">
-            <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <div className="bg-blue-200 rounded-2xl shadow-lg p-6 mb-8">
               {weather && 
                 <div className="flex items-center justify-between mb-4">
                   <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-gray-800">Weather Details {weather.location.name}</h1>

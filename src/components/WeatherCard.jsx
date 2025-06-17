@@ -13,7 +13,7 @@ const imageMap = {
 
 export default function WeatherCard({ type, title, value }) {
   return (
-    <div className="bg-amber-50 rounded-2xl shadow-md px-4 h-28 flex items-center justify-between w-full max-w-sm hover:shadow-xl">
+    <div className="bg-cyan-500 rounded-2xl shadow-md px-4 h-28 flex items-center justify-between w-full max-w-sm hover:shadow-xl">
       
       <div className="flex flex-col justify-center h-full">
         <h3 className="text-sm font-semibold text-gray-600">{title}</h3>

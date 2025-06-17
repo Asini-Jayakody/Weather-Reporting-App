@@ -7,7 +7,21 @@ export default function SidePannel({ weather }) {
     day: 'numeric',
     month: 'short',
   })
-  const [datePart, timePart] = weather.location.localtime.split(" ");
+  const now = new Date();
+  const options = {
+    timeZone: weather.location.tz_id,
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  };
+  const dateTime = new Intl.DateTimeFormat('en-US', options).format(now)
+  console.log(dateTime)
+  const [dayPart, datePart, timePart] = dateTime.split(",");
+  console.log(dayPart, datePart, timePart)
 
   return (
     <div className="flex flex-col items-center justify-center p-6 space-y-8">
@@ -17,7 +31,7 @@ export default function SidePannel({ weather }) {
           <span>{weather.location.name}, {weather.location.country}</span>
         </div>
         <div className="space-y-2">
-          <div className="text-gray-600 font-medium">Today {currentDate}</div>
+          <div className="text-gray-600 font-medium">Today {dayPart}, {datePart}</div>
           <div className="text-gray-600 font-medium">{timePart}</div>
         </div>
       </div>
@@ -37,13 +51,19 @@ export default function SidePannel({ weather }) {
       </div>
 
       <div className="flex items-center justify-center gap-8 text-gray-600">
-        <div className="flex items-center gap-2">
-          <Sunrise size={20} className="text-yellow-500" />
-          <span>Sunrise</span>
+        <div className="flex flex-col items-center gap-1">
+          <div className="flex items-center gap-1">
+            <Sunrise size={20} className="text-yellow-500" />
+            <span>Sunrise</span>
+          </div>
+          <span className="text-sm text-gray-600">{weather.forecast.forecastday[0].astro.sunrise}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <Sunset size={20} className="text-orange-500" />
-          <span>Sunset</span>
+        <div className="flex flex-col items-center gap-1">
+          <div className="flex items-center gap-1">
+            <Sunset size={20} className="text-orange-500" />
+            <span>Sunset</span>
+          </div>
+          <span>{weather.forecast.forecastday[0].astro.sunset}</span>
         </div>
       </div>
     </div>
