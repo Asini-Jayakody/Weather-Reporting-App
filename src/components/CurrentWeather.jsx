@@ -31,6 +31,16 @@ export default function CurrentWeather({current_weather}) {
                 title="UV Index"
                 value={current_weather.uv}
             />
+            <WeatherCard
+                type="pressure"
+                title="Pressure"
+                value={`${current_weather.pressure_mb} mb`}
+            />
+            <WeatherCard
+                type="cloud"
+                title="Cloud Cover"
+                value={`${current_weather.cloud}%`}
+            />
         </div>
 
     </div>

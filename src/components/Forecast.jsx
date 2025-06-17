@@ -29,7 +29,6 @@ export default function HourlyForecast({ data, localTime }) {
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
-      console.log(payload)
       const { temp, icon } = payload[0].payload;
       const value = payload[0].payload[select]
       return (

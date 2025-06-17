@@ -1,14 +1,18 @@
 import React from 'react';
-import Temperature from '../assets/temp.svg'; 
+import Temperature from '../assets/temp_2.svg'; 
 import Humidity from '../assets/humidity.svg'; 
-import Wind from '../assets/wind.svg'; 
+import Wind from '../assets/wind_2.svg'; 
 import UV from '../assets/uv.svg'; 
+import Cloud from '../assets/cloudy.svg';
+import Pressure from '../assets/pressure.svg';
 
 const imageMap = {
   humidity: Humidity,
   wind: Wind,
   uv: UV,
   temperature: Temperature,
+  pressure: Pressure,
+  cloud: Cloud
 };
 
 export default function WeatherCard({ type, title, value }) {
