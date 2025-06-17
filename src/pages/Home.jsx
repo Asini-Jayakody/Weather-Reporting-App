@@ -47,7 +47,8 @@ export default function Home({location}) {
         <div className="flex flex-col lg:flex-row gap-8">
           {weather && (
             <div className="w-full lg:w-1/3">
-              <div className="bg-blue-200 rounded-2xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl">
+              {/* <div className="bg-blue-200 rounded-2xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl"> */}
+              <div className="bg-transparent p-6 transform transition-all duration-300">
                 <SidePannel
                   weather={weather}
                 />

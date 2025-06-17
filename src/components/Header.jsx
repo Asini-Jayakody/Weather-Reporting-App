@@ -1,14 +1,45 @@
-import React, { useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { IoIosSearch } from "react-icons/io";
+import { fetchLocation } from '../services/weatherAPI';
 
 export default function Header({onSearch}) {
   const [searchLocation, setSearchLocation] = useState('')
+  const [suggestions, setSuggestions] = useState([]);
+
+  console.log(suggestions)
 
     const handleSearch = (e) => {
         e.preventDefault();
         onSearch(searchLocation)
         setSearchLocation('');
     }
+
+  const handleSuggestionClick = (location) => {
+    onSearch(location);
+    setSearchLocation('');
+    setSuggestions([]);
+  }
+
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      if (searchLocation.trim() !== '') {
+        try {
+          const locationData = await fetchLocation(searchLocation);
+          if (locationData && locationData.length > 0) {
+            setSuggestions(locationData);
+          } else {
+            setSuggestions([]);
+          }
+        } catch (error) {
+          console.error('Error fetching location:', error);
+        }
+      }
+    };
+
+    if (searchLocation) {
+      fetchLocationData();
+    }
+  }, [searchLocation]);
 
   return (
     <header className="w-full bg-cyan-200 shadow-sm py-4 fixed top-0 z-50">
@@ -32,6 +63,19 @@ export default function Header({onSearch}) {
                 }}}
             />
             <button onClick={handleSearch} className='hover:cursor-pointer'><IoIosSearch /></button>
+            {suggestions.length > 0 && (
+            <ul className="absolute top-12 bg-white w-64 rounded-md shadow-md z-50 text-sm">
+              {suggestions.map((item) => (
+                <li
+                  key={item.id}
+                  className="px-4 py-2 hover:bg-cyan-100 cursor-pointer"
+                  onClick={() => handleSuggestionClick(`${item.lat},${item.lon}`)}
+                >
+                  {item.name}, {item.region ? `${item.region},` : ''} {item.country}
+                </li>
+              ))}
+            </ul>
+          )}
           </div>
         </div>
       </div>
