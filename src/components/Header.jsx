@@ -6,8 +6,6 @@ export default function Header({onSearch}) {
   const [searchLocation, setSearchLocation] = useState('')
   const [suggestions, setSuggestions] = useState([]);
 
-  console.log(suggestions)
-
     const handleSearch = (e) => {
         e.preventDefault();
         onSearch(searchLocation)

@@ -13,9 +13,9 @@ function AppWrapper() {
 
   return (
     <>
-      <Header onSearch={handleLocationChange} />
+      {/* <Header onSearch={handleLocationChange} /> */}
       <Routes>
-        <Route path="/" element={<Home location={location} />} />
+        <Route path="/" element={<Home location={location} onSearch={handleLocationChange} />} />
       </Routes>
     </>
   )

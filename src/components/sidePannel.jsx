@@ -1,7 +1,8 @@
 import React from 'react'
 import { Sunrise, Sunset, MapPin } from 'lucide-react'
+import SearchBar from './Search.jsx'
 
-export default function SidePannel({ weather }) {
+export default function SidePannel({ weather, onSearch }) {
   const currentDate = new Date().toLocaleDateString('en-US', {
     weekday: 'short',
     day: 'numeric',
@@ -19,12 +20,13 @@ export default function SidePannel({ weather }) {
     hour12: false
   };
   const dateTime = new Intl.DateTimeFormat('en-US', options).format(now)
-  console.log(dateTime)
   const [dayPart, datePart, timePart] = dateTime.split(",");
-  console.log(dayPart, datePart, timePart)
 
   return (
     <div className="flex flex-col items-center justify-center p-6 space-y-8">
+      <div className='mb-4'>
+        < SearchBar onSearch={onSearch} />
+      </div>
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-2 text-lg font-medium text-gray-700">
           <MapPin size={20} className="text-blue-500" />
